@@ -1,6 +1,5 @@
-package lt1;
+package Session12;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ProductBusiness {
@@ -36,10 +35,13 @@ public class ProductBusiness {
                     deleteProduct(sc);
                     break;
                 case 5:
+                    searchProduct(sc);
                     break;
                 case 6:
+                    sortProductByPriceASC();
                     break;
                 case 7:
+                    sortProductByQuantityDESC();
                     break;
                 case 8:
                     System.exit(0);
@@ -190,6 +192,59 @@ public class ProductBusiness {
                 currentIndex--;
                 System.out.println("Xoa san pham thanh cong.");
             }
+        }
+    }
+
+    public static void searchProduct(Scanner sc) {
+        if (currentIndex == 0) {
+            System.out.println("Chua co san pham nao duoc them");
+        } else {
+            System.out.print("Nhap ten san pham can tim: ");
+            String productName = sc.nextLine();
+            boolean isExist = false;
+            for (int i = 0; i < currentIndex; i++) {
+                if (arrProduct[i].getProductName().toLowerCase().contains(productName.toLowerCase())) {
+                    arrProduct[i].displayData();
+                    isExist = true;
+                }
+            }
+            if (!isExist) {
+                System.err.println("Khong tim thay san pham");
+            }
+        }
+    }
+
+    public static void sortProductByPriceASC() {
+        if (currentIndex == 0) {
+            System.out.println("Chua co san pham nao duoc them");
+        } else {
+            for (int i = 0; i < currentIndex - 1; i++) {
+                for (int j = 0; j < currentIndex - i - 1; j++) {
+                    if (arrProduct[j].getPrice() > arrProduct[j + 1].getPrice()) {
+                        Product tmp = arrProduct[j];
+                        arrProduct[j] = arrProduct[j + 1];
+                        arrProduct[j + 1] = tmp;
+                    }
+                }
+            }
+            System.out.println("Sap xep theo gia tang dan.");
+        }
+    }
+
+    public static void sortProductByQuantityDESC() {
+        if (currentIndex == 0) {
+            System.out.println("Chua co san pham nao duoc them");
+        } else {
+            for (int i = 0; i < currentIndex - 1; i++) {
+                for (int j = 0; j < currentIndex - i - 1; j++) {
+                    if (arrProduct[j].getQuantity() < arrProduct[j + 1].getQuantity()) {
+                        Product tmp = arrProduct[j];
+                        arrProduct[j] = arrProduct[j + 1];
+                        arrProduct[j + 1] = tmp;
+                    }
+                }
+            }
+            System.out.println("Da sap xep theo so luong giam dan.");
         }
     }
 }
